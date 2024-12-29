@@ -1,6 +1,6 @@
 import '../global.css';
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs, Stack } from 'expo-router';
+import { Tabs } from 'expo-router';
 
 export default function RootLayout() {
   return (
@@ -47,6 +47,12 @@ export default function RootLayout() {
       />
       <Tabs.Screen
         name="index"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="+not-found"
         options={{
           href: null,
         }}
