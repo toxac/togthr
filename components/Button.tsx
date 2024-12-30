@@ -2,21 +2,24 @@ import { forwardRef } from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 
 type ButtonProps = {
-  title: string;
+  bgColor?: string;
+  textColor?: string;
 } & TouchableOpacityProps;
 
-export const Button = forwardRef<View, ButtonProps>(({ title, ...touchableProps }, ref) => {
+const Button = forwardRef<View, ButtonProps>(({ children, bgColor = "bg-teal-600", textColor = "text-white", ...touchableProps }, ref) => {
   return (
     <TouchableOpacity
       ref={ref}
       {...touchableProps}
-      className={`${styles.button} ${touchableProps.className}`}>
-      <Text className={styles.buttonText}>{title}</Text>
+      className={`${styles.button} ${touchableProps.className} ${bgColor} ${textColor}`}>
+      <Text className={`${styles.buttonText} ${textColor}`}>{children}</Text>
     </TouchableOpacity>
   );
 });
 
 const styles = {
-  button: 'items-center bg-indigo-500 rounded-[28px] shadow-md p-4',
-  buttonText: 'text-white text-lg font-semibold text-center',
+  button: 'items-center rounded-xl shadow-md p-4',
+  buttonText: 'text-lg font-semibold text-center',
 };
+
+export default Button;

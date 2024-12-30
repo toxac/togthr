@@ -64,5 +64,8 @@
 - **group**
   - name
   - members
+    - email
+    - userId [if logged in]
+    - status
   - dateCreated
   - createdBy
