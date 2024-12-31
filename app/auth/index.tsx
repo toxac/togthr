@@ -1,13 +1,22 @@
 import { useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, AppState } from 'react-native';
 
 import Container from '../../components/Container';
 
 import LoginForm from '~/components/authentication/LoginForm';
 import RegisterForm from '~/components/authentication/RegisterForm';
+import { supabase } from '~/lib/supabase';
 
-function AuthMainScreen() {
+AppState.addEventListener('change', (state) => {
+    if (state === 'active') {
+        supabase.auth.startAutoRefresh()
+    } else {
+        supabase.auth.stopAutoRefresh()
+    }
+})
+
+export default function AuthMainScreen() {
     const { type } = useLocalSearchParams();
     const isParamLogin: boolean = type === "login";
     const [isLogin, setIsLogin] = useState(isParamLogin);
@@ -24,5 +33,3 @@ function AuthMainScreen() {
         </Container>
     )
 }
-
-export default AuthMainScreen

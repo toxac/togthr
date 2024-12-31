@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "togthr",
-    "slug": "togthr",
+    "name": "floqrapp",
+    "slug": "floqrapp",
     "version": "1.0.0",
-    "scheme": "togthr",
+    "scheme": "floqrapp",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -35,14 +35,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.amitchanchal.togthr"
+      "bundleIdentifier": "com.toxac.floqrapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amitchanchal.togthr"
+      "package": "com.toxac.floqrapp"
     },
     "extra": {
       "router": {

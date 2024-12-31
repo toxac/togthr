@@ -1,7 +1,10 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useFormik } from 'formik';
+import React, { useState } from 'react';
+import { View, Text, TextInput, ActivityIndicator, Alert } from 'react-native';
 import * as Yup from 'yup';
+
+import { supabase } from '~/lib/supabase';
+
 import Button from '../Button'
 
 
@@ -18,23 +21,29 @@ const registerSchema = Yup.object().shape({
 });
 
 export default function RegisterForm() {
-    const {
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        errors,
-        touched,
-        isSubmitting,
-    } = useFormik({
+    // Component State
+    const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+    const [formSubmissionError, setFormSubmissionError] = useState("");
+
+    const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             passwordConfirmation: '',
         },
         validationSchema: registerSchema,
-        onSubmit: (values) => {
-
+        onSubmit: async (values) => {
+            setIsFormSubmitting(true);
+            const { data: { session }, error } = await supabase.auth.signUp({
+                email: values.email,
+                password: values.password
+            })
+            if (error) {
+                setFormSubmissionError(error.message);
+                Alert.alert(error.message);
+            }
+            if (!session) Alert.alert('Please check your inbox for email verification!')
+            setIsFormSubmitting(false)
         },
     });
 
@@ -44,14 +53,14 @@ export default function RegisterForm() {
                 <TextInput
                     className="w-full bg-white rounded-lg border border-primary py-[10px] px-5 text-dark-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     placeholder="Email"
-                    value={values.email}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
+                    value={formik.values.email}
+                    onChangeText={formik.handleChange('email')}
+                    onBlur={formik.handleBlur('email')}
                     autoCapitalize="none"
                     keyboardType="email-address"
                 />
-                {touched.email && errors.email && (
-                    <Text style={{ color: 'red' }}>{errors.email}</Text>
+                {formik.touched.email && formik.errors.email && (
+                    <Text style={{ color: 'red' }}>{formik.errors.email}</Text>
                 )}
             </View>
 
@@ -59,13 +68,13 @@ export default function RegisterForm() {
                 <TextInput
                     className="w-full bg-white rounded-lg border border-primary py-[10px] px-5 text-dark-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     placeholder="Password"
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
+                    value={formik.values.password}
+                    onChangeText={formik.handleChange('password')}
+                    onBlur={formik.handleBlur('password')}
                     secureTextEntry
                 />
-                {touched.password && errors.password && (
-                    <Text style={{ color: 'red' }}>{errors.password}</Text>
+                {formik.touched.password && formik.errors.password && (
+                    <Text style={{ color: 'red' }}>{formik.errors.password}</Text>
                 )}
             </View>
 
@@ -73,22 +82,22 @@ export default function RegisterForm() {
                 <TextInput
                     className="w-full bg-white rounded-lg border border-primary py-[10px] px-5 text-dark-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     placeholder="Confirm Password"
-                    value={values.passwordConfirmation}
-                    onChangeText={handleChange('passwordConfirmation')}
-                    onBlur={handleBlur('passwordConfirmation')}
+                    value={formik.values.passwordConfirmation}
+                    onChangeText={formik.handleChange('passwordConfirmation')}
+                    onBlur={formik.handleBlur('passwordConfirmation')}
                     secureTextEntry
                 />
-                {touched.passwordConfirmation && errors.passwordConfirmation && (
-                    <Text style={{ color: 'red' }}>{errors.passwordConfirmation}</Text>
+                {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation && (
+                    <Text style={{ color: 'red' }}>{formik.errors.passwordConfirmation}</Text>
                 )}
             </View>
 
             <Button
-                onPress={() => handleSubmit()}
+                onPress={() => formik.handleSubmit()}
                 textColor='text-white'
                 bgColor='bg-cyan-600'
             >
-                Register
+                {isFormSubmitting ? <ActivityIndicator /> : 'Register'}
             </Button>
         </View>
     );
