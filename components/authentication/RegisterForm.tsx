@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, ActivityIndicator, Alert } from 'react-native';
 import * as Yup from 'yup';
 
+import Button from '../Button'
+
 import { supabase } from '~/lib/supabase';
 
-import Button from '../Button'
+
 
 
 const registerSchema = Yup.object().shape({
@@ -40,7 +42,7 @@ export default function RegisterForm() {
             })
             if (error) {
                 setFormSubmissionError(error.message);
-                Alert.alert(error.message);
+                Alert.alert(formSubmissionError);
             }
             if (!session) Alert.alert('Please check your inbox for email verification!')
             setIsFormSubmitting(false)

@@ -1,11 +1,13 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
+import Container from '~/components/Container'
+
 function ListMainScreen() {
     return (
-        <View>
+        <Container>
             <Text>ListMainScreen</Text>
-        </View>
+        </Container>
     )
 }
 

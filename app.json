@@ -4,6 +4,7 @@
     "slug": "floqrapp",
     "version": "1.0.0",
     "scheme": "floqrapp",
+    "newArchEnabled": true,
     "web": {
       "bundler": "metro",
       "output": "static",
