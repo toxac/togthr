@@ -6,31 +6,48 @@ export default function TabLayout() {
     return (
         <Tabs>
             <Tabs.Screen
+                name="notifications"
+                options={{
+                    title: 'Notifications',
+                    headerShown: false,
+                    tabBarIcon: ({ focused, color }) => <Ionicons
+                        name={focused ? "notifications" : "notifications-outline"}
+                        size={24} color={color}
+                    />,
+                }}
+            />
+            <Tabs.Screen
                 name="lists"
                 options={{
                     title: 'Lists',
-                    tabBarIcon: ({ color }) => <Ionicons name="list" size={24} color={color} />,
+                    headerShown: false,
+                    tabBarIcon: ({ focused, color }) => <Ionicons
+                        name={focused ? "list" : "list-outline"}
+                        size={24} color={color}
+                    />,
                 }}
             />
             <Tabs.Screen
                 name="groups"
                 options={{
                     title: 'Groups',
-                    tabBarIcon: ({ color }) => <Ionicons name="people" size={24} color={color} />,
+                    headerShown: false,
+                    tabBarIcon: ({ focused, color }) => <Ionicons
+                        name={focused ? "people" : "people-outline"}
+                        size={24} color={color}
+                    />,
                 }}
             />
-            <Tabs.Screen
-                name="notifications"
-                options={{
-                    title: 'Notifications',
-                    tabBarIcon: ({ color }) => <Ionicons name="notifications" size={24} color={color} />,
-                }}
-            />
+
             <Tabs.Screen
                 name="settings"
                 options={{
                     title: 'Settings',
-                    tabBarIcon: ({ color }) => <Ionicons name="settings" size={24} color={color} />,
+                    headerShown: false,
+                    tabBarIcon: ({ focused, color }) => <Ionicons
+                        name="settings"
+                        size={24} color={color}
+                    />,
                 }}
             />
 
