@@ -2,7 +2,15 @@ import { Stack } from 'expo-router';
 
 export default function ListsLayout() {
     return (
-        <Stack>
+        <Stack screenOptions={{
+            headerStyle: {
+                backgroundColor: '#fff',
+            },
+            headerTintColor: '#0d9488',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }}>
             <Stack.Screen name="index" options={{ title: 'My Lists' }} />
             <Stack.Screen name="create" options={{ title: 'Create List' }} />
             <Stack.Screen name="[listId]" options={{ title: 'List Details' }} />

@@ -20,6 +20,7 @@ export default function AuthMainScreen() {
     return (
         <Container bgColor='bg-gray-100'>
             <View className='flex-1 justify-center items-center'>
+                <Text className='text-2xl font-bold text-gray-800'>{authComponent === 'register' ? 'Register' : 'Login'}</Text>
                 {authComponent === 'register' ?
                     (
                         <>
@@ -41,7 +42,6 @@ export default function AuthMainScreen() {
 
                 }
             </View>
-
         </Container>
     )
 }

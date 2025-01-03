@@ -1,11 +1,13 @@
+import { router } from 'expo-router';
 import { useFormik } from 'formik';
 import React from 'react';
 import { View, Text, TextInput, ActivityIndicator, Alert } from 'react-native';
 import * as Yup from 'yup';
 
+
 import Button from '../Button';
 
-
+import { supabase } from '~/lib/supabase';
 
 const loginSchema = Yup.object().shape({
     email: Yup.string()
@@ -16,29 +18,45 @@ const loginSchema = Yup.object().shape({
         .required('Password is required'),
 });
 
+
 export default function LoginForm() {
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState("");
+
     const {
         handleChange,
         handleBlur,
         handleSubmit,
         values,
         errors,
-        touched,
-        isSubmitting,
+        touched
     } = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
         validationSchema: loginSchema,
-        onSubmit: (values) => {
-            Alert.alert(values.email, values.password);
+        onSubmit: async (values) => {
+            setLoading(true);
+            const { error } = await supabase.auth.signInWithPassword({
+                email: values.email,
+                password: values.password,
+            })
 
+            if (error) {
+                setLoading(false)
+                Alert.alert(error.message)
+                setError(error.message);
+            } else {
+                setLoading(false)
+                router.replace('/(tabs)/lists');
+            }
         },
     });
 
     return (
         <View className="w-full p-10 gap-6">
+            {error ? <Text>{error}</Text> : null}
             <View>
                 <TextInput
                     placeholder="Email"
@@ -73,7 +91,7 @@ export default function LoginForm() {
                 textColor='text-white'
                 bgColor='bg-cyan-600'
             >
-                Login
+                {loading ? <ActivityIndicator /> : 'Login'}
             </Button>
         </View>
     );

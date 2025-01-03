@@ -1,3 +1,4 @@
+import "../global.css";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -5,9 +6,9 @@ export default function RootLayout() {
         <Stack
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: '#f4511e',
+                    backgroundColor: '#fff',
                 },
-                headerTintColor: '#fff',
+                headerTintColor: '#0d9488',
                 headerTitleStyle: {
                     fontWeight: 'bold',
                 },
