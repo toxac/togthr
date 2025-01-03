@@ -13,3 +13,12 @@ export const useStore = create<BearState>((set) => ({
   removeAllBears: () => set({ bears: 0 }),
   updateBears: (newBears) => set({ bears: newBears }),
 }));
+
+
+// implement store for lists
+
+// implement store for list items
+
+// implement store for groups
+
+// implement store for profile

@@ -1,11 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
+
+import Container from '~/components/Container'
 
 function SettingsMainScreen() {
     return (
-        <View>
+        <Container>
             <Text>SettingsMainScreen</Text>
-        </View>
+        </Container>
     )
 }
 
